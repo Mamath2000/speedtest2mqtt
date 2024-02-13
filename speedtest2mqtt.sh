@@ -144,7 +144,7 @@ echo $PAYLOAD
 topic="${MQTT_TOPIC}/$(echo $SITE_NAME | tr . _ | tr ' ' _ | tr - _ | tr '[:upper:]' '[:lower:]')"
 
 /usr/bin/mosquitto_pub \
-        ${MQTT_OPTIONS}
+        ${MQTT_OPTIONS} \
         -h ${MQTT_HOST} \
         -i ${MQTT_ID} \
         -u ${MQTT_USER} -P ${MQTT_PASS} \
