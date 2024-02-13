@@ -87,9 +87,9 @@ function createSensor_entity {
 ## DECLAR SENSORS IN HOME ASSISTANT
 echo "Déclaration de l'entité Update (Home Assistant)"
 
-createSensor_entity "Download" "{{ value_json.download | float(default=0) | round(0) }}"
-createSensor_entity "Upload" "{{ value_json.upload | float(default=0) | round(0) }}"
-createSensor_entity "Ping" "{{ value_json.ping | float(default=0) | round(0) }}"
+createSensor_entity "Download" "{{ value_json.download | float(default=0) | round(2) }}"
+createSensor_entity "Upload" "{{ value_json.upload | float(default=0) | round(2) }}"
+createSensor_entity "Ping" "{{ value_json.ping | float(default=0) | round(2) }}"
 createSensor_entity "Server name" "{{ value_json.servername }}"
 createSensor_entity "Server host" "{{ value_json.serverhost }}"
 createSensor_entity "Server country" "{{ value_json.servercountry }}"
