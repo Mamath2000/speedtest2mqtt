@@ -4,13 +4,15 @@ Alpine-based docker to push Ookla Speedtest results to a MQTT Server.
 
 ## Environment Variables
 
-    CRON (Default '0 0,6,12,18 * * *' -> run speedtest 4 times a day )
-    MQTT_HOST (Default 'localhost')
-    MQTT_ID (Default 'speedtest2mqtt')
-    MQTT_TOPIC (Default 'speedtest')
-    MQTT_OPTIONS (Default '-r')
-    MQTT_USER (Default 'user')
-    MQTT_PASS (Default 'pass')
+```
+CRON (Default '0 0,6,12,18 * * *' -> run speedtest 4 times a day )
+MQTT_HOST (Default 'localhost')
+MQTT_ID (Default 'speedtest2mqtt')
+MQTT_TOPIC (Default 'speedtest')
+MQTT_OPTIONS (Default '-r')
+MQTT_USER (Default 'user')
+MQTT_PASS (Default 'pass')
+```
 
 ## Examples
 
@@ -26,10 +28,11 @@ services:
     container_name: speedtest2mqtt
     environment:
       - MQTT_HOST=192.168.100.100
+      - SITE_NAME=Home
     restart: unless-stopped
 ```
 
-#### docker 
+#### docker
 
 ```
 docker run -d --env-file ./env.list moafrancky/speedtest2mqtt:latest
@@ -44,14 +47,16 @@ MQTT_TOPIC=speedtest
 MQTT_OPTIONS=-r
 MQTT_USER=user
 MQTT_PASS=changeme
+DISCOVERY_TOPIC=homeassistant
+SITE_NAME=Home
 CRON=0 * * * *
 ```
 
 ## Note
 
-This docker image uses [ookla speedtest cli](https://www.speedtest.net/fr/apps/cli) and automatically 
+This docker image uses [ookla speedtest cli](https://www.speedtest.net/fr/apps/cli) and automatically
 accepts Ookla License and GDPR terms.
- 
+
 ## Ookla speedtest License
 
 You may only use this Speedtest software and information generated from it for personal, non-commercial use, through a command line interface on a personal computer. Your use of this software is subject to the End User License Agreement, Terms of Use and Privacy Policy at these URLs:
@@ -72,3 +77,7 @@ shared, where the data may be transferred and Ookla's contact details,
 please see our Privacy Policy at:
 
 http://www.speedtest.net/privacy
+
+## Home Assistant Auto-discovery
+
+Set DISCOVERY_TOPIC variable for auto-discovery sensor in Home Assistant
