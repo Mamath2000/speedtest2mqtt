@@ -1,0 +1,55 @@
+{
+    "type": "result",
+    "timestamp": "2024-02-13T14:37:17Z",
+    "ping": {
+        "jitter": 0.535,
+        "latency": 17.630,
+        "low": 17.360,
+        "high": 19.097
+    },
+    "download": {
+        "bandwidth": 94270299,
+        "bytes": 998215000,
+        "elapsed": 10404,
+        "latency": {
+            "iqm": 18.238,
+            "low": 17.209,
+            "high": 258.437,
+            "jitter": 3.218
+        }
+    },
+    "upload": {
+        "bandwidth": 84099576,
+        "bytes": 693397705,
+        "elapsed": 8311,
+        "latency": {
+            "iqm": 36.023,
+            "low": 18.974,
+            "high": 330.605,
+            "jitter": 5.558
+        }
+    },
+    "packetLoss": 0,
+    "isp": "Free SAS",
+    "interface": {
+        "internalIp": "192.168.0.198",
+        "name": "enp2s0",
+        "macAddr": "18:66:DA:23:D6:AF",
+        "isVpn": false,
+        "externalIp": "82.67.61.231"
+    },
+    "server": {
+        "id": 52534,
+        "host": "speedtest-prs.vts.bf",
+        "port": 8080,
+        "name": "Virtual Technologies and Solutions",
+        "location": "Paris",
+        "country": "France",
+        "ip": "102.67.96.82"
+    },
+    "result": {
+        "id": "a17fd492-dcf7-47e1-8ad5-5c654ca8faa8",
+        "url": "https://www.speedtest.net/result/c/a17fd492-dcf7-47e1-8ad5-5c654ca8faa8",
+        "persisted": true
+    }
+}
