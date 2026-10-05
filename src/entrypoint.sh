@@ -25,4 +25,4 @@ sed -i "/schedule1/c\    schedule: \"${CRON}\"" /home/foo/crontab.yml
 sed -i "/schedule2/c\    schedule: \"@reboot\"" /home/foo/crontab.yml
 
 echo "starting cron (${CRON})"
-/yacronenv/bin/yacron -c /home/foo/crontab.yml
+exec /yacronenv/bin/yacron -c /home/foo/crontab.yml

@@ -26,5 +26,5 @@ RUN apk --no-cache add gcc musl-dev python3-dev --virtual .build-deps && \
     apk del --no-cache .build-deps
 
 USER foo
-ENTRYPOINT /opt/entrypoint.sh
+ENTRYPOINT ["/opt/entrypoint.sh"]
 
