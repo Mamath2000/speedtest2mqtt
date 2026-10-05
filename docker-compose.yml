@@ -1,0 +1,8 @@
+services:
+  speedtest2mqtt:
+    image: mathmath350/speedtest2mqtt:latest
+    container_name: speedtest2mqtt
+    restart: unless-stopped
+    env_file: .env   # MQTT_USER / MQTT_PASS (voir .env.example)
+    volumes:
+      - ./config.yaml:/home/foo/config.yaml:ro   # voir config.example.yaml

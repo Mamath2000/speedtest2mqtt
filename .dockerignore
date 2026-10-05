@@ -1,0 +1,6 @@
+# Contexte de build minimal : jamais de configuration ni de secrets dans l'image
+*
+!entrypoint.sh
+!speedtest2mqtt.sh
+!crontab.yml
+!VERSION

@@ -2,55 +2,38 @@
 
 Alpine-based docker to push Ookla Speedtest results to a MQTT Server.
 
-## Environment Variables
+## Démarrage rapide
 
-```
-CRON (Default '0 0,6,12,18 * * *' -> run speedtest 4 times a day )
-MQTT_HOST (Default 'localhost')
-MQTT_ID (Default 'speedtest2mqtt')
-MQTT_TOPIC (Default 'speedtest')
-MQTT_OPTIONS (Default '-r')
-MQTT_USER (Default 'user')
-MQTT_PASS (Default 'pass')
+```bash
+make init            # crée config.yaml et .env depuis les exemples
+# éditer config.yaml (broker, site, cron) et .env (MQTT_USER / MQTT_PASS)
+docker compose up -d
 ```
 
-## Examples
+L'image est `mathmath350/speedtest2mqtt:latest`. Un test est lancé au démarrage puis selon `cron`.
+Les entités sont déclarées automatiquement dans Home Assistant (auto-discovery).
 
-#### docker-compose.yml
+## Configuration
 
-```
-version: "3"
+Priorité : **variable d'environnement > `config.yaml` > défaut**.
 
-services:
+| Clé (`config.yaml`) / variable | Défaut | Rôle |
+|---|---|---|
+| `mqtt_host` / `MQTT_HOST` | `localhost` | Broker MQTT |
+| `mqtt_id` / `MQTT_ID` | `speedtest2mqtt` | Client ID |
+| `mqtt_topic` / `MQTT_TOPIC` | `speedtest` | Topic de base |
+| `mqtt_options` / `MQTT_OPTIONS` | `-r` | Options `mosquitto_pub` |
+| `MQTT_USER` / `MQTT_PASS` | `user` / `pass` | Identifiants (à mettre dans `.env`) |
+| `discovery_topic` / `DISCOVERY_TOPIC` | `homeassistant` | Préfixe discovery HA |
+| `site_name` / `SITE_NAME` | `Home` | Nom du site / de l'appareil HA |
+| `cron` / `CRON` | `0 0,6,12,18 * * *` | Fréquence (4 fois par jour) |
 
-  speedtest:
-    image: moafrancky/speedtest2mqtt:latest
-    container_name: speedtest2mqtt
-    environment:
-      - MQTT_HOST=192.168.100.100
-      - SITE_NAME=Home
-    restart: unless-stopped
-```
+Voir `config.example.yaml` et `.env.example`.
 
-#### docker
+## Développement / release
 
-```
-docker run -d --env-file ./env.list moafrancky/speedtest2mqtt:latest
-```
-
-with env.list
-
-```
-MQTT_HOST=192.168.100.100
-MQTT_ID=speedtest2mqtt
-MQTT_TOPIC=speedtest
-MQTT_OPTIONS=-r
-MQTT_USER=user
-MQTT_PASS=changeme
-DISCOVERY_TOPIC=homeassistant
-SITE_NAME=Home
-CRON=0 * * * *
-```
+`make help` liste les commandes. `make docker-release` incrémente `VERSION` (patch), commite
+« Release X.Y.Z », construit et pousse l'image (`latest`, `X.Y.Z`, ref git) sur Docker Hub, puis tag `vX.Y.Z`.
 
 ## Note
 
@@ -77,7 +60,3 @@ shared, where the data may be transferred and Ookla's contact details,
 please see our Privacy Policy at:
 
 http://www.speedtest.net/privacy
-
-## Home Assistant Auto-discovery
-
-Set DISCOVERY_TOPIC variable for auto-discovery sensor in Home Assistant
