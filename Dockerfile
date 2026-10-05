@@ -1,8 +1,8 @@
 FROM alpine:3.16.3
 ARG TARGETARCH
 
-COPY entrypoint.sh speedtest2mqtt.sh VERSION /opt/
-COPY crontab.yml /home/foo/
+COPY src/entrypoint.sh src/speedtest2mqtt.sh VERSION /opt/
+COPY src/crontab.yml /home/foo/
 
 RUN addgroup -S foo && adduser -S foo -G foo && \
     chmod +x /opt/speedtest2mqtt.sh /opt/entrypoint.sh && \
@@ -26,5 +26,5 @@ RUN apk --no-cache add gcc musl-dev python3-dev --virtual .build-deps && \
     apk del --no-cache .build-deps
 
 USER foo
-ENTRYPOINT /opt/entrypoint.sh
+ENTRYPOINT ["/opt/entrypoint.sh"]
 

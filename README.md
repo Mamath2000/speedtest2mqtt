@@ -30,10 +30,10 @@ Priorité : **variable d'environnement > `config.yaml` > défaut**.
 
 Voir `config.example.yaml` et `.env.example`.
 
-## Développement / release
+## Documentation
 
-`make help` liste les commandes. `make docker-release` incrémente `VERSION` (patch), commite
-« Release X.Y.Z », construit et pousse l'image (`latest`, `X.Y.Z`, ref git) sur Docker Hub, puis tag `vX.Y.Z`.
+Documentation complète (français, compatible Docusaurus) : **[docs/](docs/index.md)**.
+`make help` liste les commandes (`init`, `run`, `docker-build`, `docker-release`).
 
 ## Note
 
