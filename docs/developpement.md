@@ -37,10 +37,13 @@ make docker-release  # release complète (voir ci-dessous)
 `make docker-release` (via `docker-release.sh`) :
 
 1. refuse de partir si le répertoire de travail n'est pas propre ou si `docker login` n'a pas été fait ;
-2. incrémente le patch du fichier `VERSION` et le commite (« 🔖 Release X.Y.Z ») ;
-3. construit l'image avec les labels OCI (version, révision, date) ;
+2. incrémente le patch du fichier `VERSION` (sans commit), juste avant le build ;
+3. construit l'image avec les labels OCI (version, révision = dernier commit, date) ;
 4. pousse `latest`, `X.Y.Z` et la référence git courte sur Docker Hub ;
-5. pose le tag git `vX.Y.Z`.
+5. **seulement si tout a réussi** : commite `VERSION` (« 🔖 Release X.Y.Z ») et pose le tag git `vX.Y.Z`.
+
+En cas d'échec (build, push, droits Docker Hub insuffisants…), `VERSION` est restaurée : aucun commit ni tag n'est
+créé et le dépôt reste propre ; on peut relancer la release après correction.
 
 `DOCKER_USER` (défaut `mathmath350`) permet de changer de compte. Il reste à pousser :
 `git push origin <branche> --tags`.

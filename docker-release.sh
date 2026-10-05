@@ -1,8 +1,10 @@
 #!/bin/bash
 # Build / release Docker de speedtest2mqtt.
 #   build   : image locale speedtest2mqtt:latest (aucun push)
-#   release : version +1 (fichier VERSION) commitée « Release X.Y.Z », build, push Docker Hub
-#             (latest, X.Y.Z, ref git), tag git vX.Y.Z — l'image X.Y.Z contient exactement ce commit
+#   release : version +1 (fichier VERSION) juste avant le build, push Docker Hub (latest, X.Y.Z, ref git),
+#             puis seulement si tout a réussi : commit « Release X.Y.Z » et tag git vX.Y.Z.
+#             L'image est construite depuis le dernier commit + le nouveau VERSION ; son label revision
+#             est ce dernier commit. Un échec ne laisse ni commit ni tag.
 set -e
 
 APP_NAME="speedtest2mqtt"
@@ -36,12 +38,10 @@ IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
 NEW_VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
 echo "📦 Version : $VERSION → $NEW_VERSION"
 
+# La version est incrémentée juste avant le build (l'image embarque le nouveau VERSION),
+# mais rien n'est commité tant que le build et le push n'ont pas réussi.
 echo "$NEW_VERSION" > VERSION
-trap 'echo "❌ Échec : version restaurée"; git checkout -- VERSION' ERR
-git add VERSION
-git commit -q -m "🔖 Release $NEW_VERSION"
-trap - ERR
-trap 'echo "❌ Échec du build/push : annuler le commit de release avec  git reset --hard HEAD~1"' ERR
+trap 'echo "❌ Échec : VERSION restaurée ($VERSION), rien de commité ni de tagué"; git checkout -- VERSION' ERR
 GIT_REF=$(git rev-parse --short HEAD)
 
 docker build \
@@ -55,7 +55,12 @@ docker build \
 for tag in latest "$NEW_VERSION" "$GIT_REF"; do
     docker push -q "$DOCKER_USER/$APP_NAME:$tag"
 done
+
+# Tout a réussi : on enregistre la release
+git add VERSION
+git commit -q -m "🔖 Release $NEW_VERSION"
 git tag "v$NEW_VERSION"
+trap - ERR
 
 echo "✅ Version $NEW_VERSION publiée : $DOCKER_USER/$APP_NAME:{latest,$NEW_VERSION,$GIT_REF}"
 echo "🔄 À pousser : git push origin <branche> --tags"
