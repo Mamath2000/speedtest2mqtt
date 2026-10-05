@@ -138,7 +138,7 @@ JSON_STRING='{
     "serverlocation":"%s",
     "serverhost":"%s",
     "timestamp":"%s"}\n'
-PAYLOAD=`printf "$JSON_STRING" "${download}" "${downraw}" "${upload}" "${upraw}" "${ping}" "${jitter}" "${packetloss}" "${serverid}" "${servername}" "${servercountry}" "${serverlocation}" "${serverhost}" "${timestamp}"`
+PAYLOAD=`printf "$JSON_STRING" "${download}" "${downraw}" "${upload}" "${upraw}" "${ping}" "${packetloss}" "${jitter}" "${serverid}" "${servername}" "${servercountry}" "${serverlocation}" "${serverhost}" "${timestamp}"`
 
 echo $PAYLOAD
 topic="${MQTT_TOPIC}/$(echo $SITE_NAME | tr . _ | tr ' ' _ | tr - _ | tr '[:upper:]' '[:lower:]')"

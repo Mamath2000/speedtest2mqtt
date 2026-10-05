@@ -1,0 +1,15 @@
+# Configuration non secrète de speedtest2mqtt. Copier vers config.yaml.
+# Priorité : variable d'environnement > config.yaml > valeur par défaut.
+# Les identifiants MQTT vont dans .env (MQTT_USER / MQTT_PASS), pas ici.
+
+mqtt_host: mqtt-broker.example.lan
+mqtt_id: speedtest2mqtt
+mqtt_topic: speedtest
+mqtt_options: "-r"
+
+# Home Assistant auto-discovery (préfixe de discovery HA)
+discovery_topic: homeassistant
+site_name: Home
+
+# Fréquence des mesures (cron 5 champs) ; un test est aussi lancé au démarrage
+cron: "0 0,6,12,18 * * *"

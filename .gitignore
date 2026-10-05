@@ -1,2 +1,5 @@
-﻿.idea
-docker-compose.yml
+.idea
+.env
+.env.*
+!.env.example
+config.yaml
