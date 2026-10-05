@@ -39,14 +39,14 @@ Tout paramètre de `config.yaml` peut aussi être défini ici pour le surcharger
 Une expression `cron` contient **5 champs** séparés par des espaces :
 
 ```
-┌───────── minute        (0-59)
-│ ┌─────── heure         (0-23)
-│ │ ┌───── jour du mois  (1-31)
-│ │ │ ┌─── mois          (1-12)
-│ │ │ │ ┌─ jour semaine  (0-7, 0 et 7 = dimanche)
-│ │ │ │ │
 0 0,6,12,18 * * *
 ```
+
+| Champ | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|
+| Rôle | minute | heure | jour du mois | mois | jour de la semaine |
+| Valeurs permises | 0-59 | 0-23 | 1-31 | 1-12 | 0-7 (0 et 7 = dimanche) |
+| Dans l'exemple | `0` | `0,6,12,18` | `*` | `*` | `*` |
 
 Dans un champ :
 
