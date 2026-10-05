@@ -34,13 +34,43 @@ Modèle : `.env.example`. Fichier en mode 600, jamais dans git ni dans l'image.
 
 Tout paramètre de `config.yaml` peut aussi être défini ici pour le surcharger.
 
+## Syntaxe de `cron`
+
+Une expression `cron` contient **5 champs** séparés par des espaces :
+
+```
+┌───────── minute        (0-59)
+│ ┌─────── heure         (0-23)
+│ │ ┌───── jour du mois  (1-31)
+│ │ │ ┌─── mois          (1-12)
+│ │ │ │ ┌─ jour semaine  (0-7, 0 et 7 = dimanche)
+│ │ │ │ │
+0 0,6,12,18 * * *
+```
+
+Dans un champ :
+
+| Symbole | Sens | Exemple |
+|---|---|---|
+| `*` | toutes les valeurs | `*` en heure = chaque heure |
+| `,` | liste de valeurs **dans le même champ** | `0,6,12,18` en heure = à 0 h, 6 h, 12 h et 18 h |
+| `-` | plage | `8-20` en heure = de 8 h à 20 h |
+| `/` | pas | `*/30` en minute = toutes les 30 minutes |
+
+La virgule ne sépare donc **pas** plusieurs expressions cron : `0 0,6,12,18 * * *` est une seule expression
+« à la minute 0, aux heures 0, 6, 12 et 18, tous les jours ». À ne pas confondre avec `18 * * * *`, où le `18` est
+la **minute** (chaque heure à HH:18).
+
+Garder 5 champs : un 6ᵉ champ est lu comme l'année, sans effet utile ici.
+
 ## Exemples de `cron`
 
 | Expression | Fréquence |
 |---|---|
-| `0 0,6,12,18 * * *` | 4 fois par jour (défaut) |
-| `0 * * * *` | toutes les heures |
+| `0 0,6,12,18 * * *` | 4 fois par jour, à 0 h, 6 h, 12 h, 18 h (défaut) |
+| `0 * * * *` | toutes les heures, à la minute 0 |
 | `*/30 * * * *` | toutes les 30 minutes |
+| `15 7 * * 1-5` | à 7 h 15, du lundi au vendredi |
 
 :::caution
 Chaque test consomme de la bande passante (plusieurs centaines de Mo) : évitez les fréquences très élevées.
